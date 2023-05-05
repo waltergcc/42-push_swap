@@ -6,11 +6,55 @@
 /*   By: wcorrea- <wcorrea-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 23:37:57 by wcorrea-          #+#    #+#             */
-/*   Updated: 2023/05/05 00:11:41 by wcorrea-         ###   ########.fr       */
+/*   Updated: 2023/05/05 12:47:27 by wcorrea-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+void	define_index(t_stack *a, int size)
+{
+	t_stack	*curr;
+	t_stack	*max_stack;
+	int		max_content;
+
+	while (size--)
+	{
+		curr = a;
+		max_content = INT_MIN;
+		max_stack = NULL;
+		while (curr)
+		{
+			if (curr->content == INT_MIN && curr->index == 0)
+				curr->index = 1;
+			else if (curr->content > max_content && curr->index == 0)
+			{
+				max_content = curr->content;
+				max_stack = curr;
+				curr = a;
+			}
+			else
+				curr = curr->next;
+		}
+		if (max_stack)
+			max_stack->index = size + 1;
+	}
+}
+
+int	get_size(t_stack *stack)
+{
+	int		count;
+	t_stack	*curr;
+
+	count = 0;
+	curr = stack;
+	while (curr)
+	{
+		count++;
+		curr = curr->next;
+	}
+	return (count);
+}
 
 static t_stack	*new_node(int n)
 {
@@ -19,7 +63,8 @@ static t_stack	*new_node(int n)
 	node = (t_stack *)malloc(sizeof(t_stack));
 	if (!node)
 		return (NULL);
-	node->value = n;
+	node->content = n;
+	node->index = 0;
 	node->next = NULL;
 	return (node);
 }

@@ -6,7 +6,7 @@
 /*   By: wcorrea- <wcorrea-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 22:11:02 by wcorrea-          #+#    #+#             */
-/*   Updated: 2023/05/05 00:08:30 by wcorrea-         ###   ########.fr       */
+/*   Updated: 2023/05/05 13:08:03 by wcorrea-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,16 @@
 
 typedef struct s_stack
 {
-	int				value;
+	int				content;
+	int				index;
 	struct s_stack	*next;
 }					t_stack;
 
 int		check_input(char **arg);
 t_stack	*create_stack(int ac, char **av);
+int		get_size(t_stack *stack);
+void	define_index(t_stack *a, int size);
+int		check_sort(t_stack *stack);
 
 int		absolute_nbr(int n);
 int		ft_atoi(const char *s);
