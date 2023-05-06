@@ -6,13 +6,14 @@
 #    By: wcorrea- <wcorrea-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 22:41:28 by wcorrea-          #+#    #+#              #
-#    Updated: 2023/05/05 00:06:52 by wcorrea-         ###   ########.fr        #
+#    Updated: 2023/05/06 09:37:21 by wcorrea-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = push_swap
 
-SRC = push_swap.c check_input.c utils.c create_stack.c
+SRC = push_swap.c check_input.c utils.c create_stack.c \
+		basic_moves.c rotate_moves.c
 OBJS = ${SRC:.c=.o}
 
 CC = cc

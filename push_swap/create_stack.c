@@ -6,7 +6,7 @@
 /*   By: wcorrea- <wcorrea-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 23:37:57 by wcorrea-          #+#    #+#             */
-/*   Updated: 2023/05/05 12:47:27 by wcorrea-         ###   ########.fr       */
+/*   Updated: 2023/05/06 00:37:34 by wcorrea-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,13 @@ void	define_index(t_stack *a, int size)
 	}
 }
 
-int	get_size(t_stack *stack)
+int	get_size(t_stack *lst)
 {
 	int		count;
 	t_stack	*curr;
 
 	count = 0;
-	curr = stack;
+	curr = lst;
 	while (curr)
 	{
 		count++;
@@ -69,17 +69,17 @@ static t_stack	*new_node(int n)
 	return (node);
 }
 
-static void	add_at_end(t_stack **stack, t_stack *new)
+static void	add_at_end(t_stack **lst, t_stack *new)
 {
 	t_stack	*curr;
 
 	if (!new)
 		return ;
-	if (!*stack)
-		*stack = new;
+	if (!*lst)
+		*lst = new;
 	else
 	{
-		curr = *stack;
+		curr = *lst;
 		while (curr->next)
 			curr = curr->next;
 		curr->next = new;

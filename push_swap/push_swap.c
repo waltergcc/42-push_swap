@@ -6,17 +6,30 @@
 /*   By: wcorrea- <wcorrea-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 22:11:07 by wcorrea-          #+#    #+#             */
-/*   Updated: 2023/05/05 14:27:02 by wcorrea-         ###   ########.fr       */
+/*   Updated: 2023/05/06 09:32:40 by wcorrea-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	check_sort(t_stack *stack)
+void	print_list(t_stack *lst)
 {
 	t_stack	*curr;
 
-	curr = stack;
+	curr = lst;
+	while (curr)
+	{
+		printf("%d - ", curr->index);
+		printf("%d\n", curr->content);
+		curr = curr->next;
+	}
+}
+
+int	check_sort(t_stack *lst)
+{
+	t_stack	*curr;
+
+	curr = lst;
 	while (curr->next)
 	{
 		if (curr->content > curr->next->content)
@@ -26,17 +39,22 @@ int	check_sort(t_stack *stack)
 	return (1);
 }
 
-static void	push_swap(t_stack **a, t_stack *b, int size)
+static void	push_swap(t_stack **a, t_stack **b, int size)
 {
-	if (size = 2 && !check_sort(*a))
-		printf("It`s here\n");
+	(void) b;
+	if (size == 2 && !check_sort(*a))
+		swap_2(a, NULL, "sa");
+	else if (size == 3)
+		swap_3(a);
+	else if (size > 3 && !check_sort(*a))
+		return;
 }
 
 int	main(void)
 {
-	char	*av[10] = {"7", "2"};
+	char	*av[10] = {"18", "19", "17"};
 	// char	*av[10] = {"698", "0", "154", "-2147483648", "-987", "1236589", "10"};
-	int		ac = 2;
+	int		ac = 3;
 	int		size;
 	t_stack	*a;
 	t_stack	*b;
@@ -48,12 +66,8 @@ int	main(void)
 	b = NULL;
 	size = get_size(a);
 	define_index(a, size);
-	printf("Size: %d\n", size);
-	printf("Is sorted?: %d\n", check_sort(a));
-	while (a)
-	{
-		printf("%d - ", a->index);
-		printf("%d\n", a->content);
-		a = a->next;
-	}
+	print_list(a);
+	push_swap(&a, &b, size);
+	print_list(a);
+
 }

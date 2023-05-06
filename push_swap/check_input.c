@@ -6,13 +6,13 @@
 /*   By: wcorrea- <wcorrea-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 22:10:58 by wcorrea-          #+#    #+#             */
-/*   Updated: 2023/05/04 22:39:58 by wcorrea-         ###   ########.fr       */
+/*   Updated: 2023/05/05 23:37:32 by wcorrea-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static int	ft_nbrcmp(char *s1, char *s2)
+int	ft_strcmp(char *s1, char *s2)
 {
 	if (*s1 == '+')
 	{
@@ -43,7 +43,7 @@ static int	check_repeat(char **arg)
 		j = i + 1;
 		while (arg[j])
 		{
-			if (!ft_nbrcmp(arg[i], arg[j]))
+			if (!ft_strcmp(arg[i], arg[j]))
 				return (0);
 			j++;
 		}

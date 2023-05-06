@@ -6,7 +6,7 @@
 /*   By: wcorrea- <wcorrea-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 22:45:57 by wcorrea-          #+#    #+#             */
-/*   Updated: 2023/05/04 23:09:37 by wcorrea-         ###   ########.fr       */
+/*   Updated: 2023/05/06 00:34:08 by wcorrea-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,19 @@ void	ft_putstr(char *s)
 	}
 }
 
-void	free_stack(t_stack **stack)
+void	free_stack(t_stack **lst)
 {
 	t_stack	*curr;
 
-	if (!stack || !*stack)
+	if (!lst || !*lst)
 		return ;
-	while (*stack)
+	while (*lst)
 	{
-		curr = (*stack)->next;
-		free(*stack);
-		*stack = curr;
+		curr = (*lst)->next;
+		free(*lst);
+		*lst = curr;
 	}
-	*stack = NULL;
+	*lst = NULL;
 }
 
 void	program_exit(t_stack **a, t_stack **b)
