@@ -6,7 +6,7 @@
 /*   By: wcorrea- <wcorrea-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 21:36:29 by wcorrea-          #+#    #+#             */
-/*   Updated: 2023/05/06 23:32:17 by wcorrea-         ###   ########.fr       */
+/*   Updated: 2023/05/07 16:14:35 by wcorrea-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ static int	get_max_index(t_stack *st)
 	int		max_id;
 	t_stack	*s;
 
-	max_id = st->id;
+	max_id = st->main_index;
 	s = st;
 	while (s)
 	{
-		if (s->id > max_id)
-			max_id = s->id;
-		s = s->nx;
+		if (s->main_index > max_id)
+			max_id = s->main_index;
+		s = s->next;
 	}
 	return (max_id);
 }
@@ -32,14 +32,14 @@ static void	swap(t_stack *st)
 {
 	int	t;
 
-	if (!st || !st->nx)
+	if (!st || !st->next)
 		return ;
-	t = st->nb;
-	st->nb = st->nx->nb;
-	st->nx->nb = t;
-	t = st->id;
-	st->id = st->nx->id;
-	st->nx->id = t;
+	t = st->n;
+	st->n = st->next->n;
+	st->next->n = t;
+	t = st->main_index;
+	st->main_index = st->next->main_index;
+	st->next->main_index = t;
 }
 
 static void	push(t_stack **src, t_stack **dst)
@@ -48,13 +48,13 @@ static void	push(t_stack **src, t_stack **dst)
 
 	if (!src)
 		return ;
-	t = (*src)->nx;
-	(*src)->nx = *dst;
+	t = (*src)->next;
+	(*src)->next = *dst;
 	*dst = *src;
 	*src = t;
 }
 
-void	swap_2(t_stack **sa, t_stack **sb, char *choice)
+void	swap_move(t_stack **sa, t_stack **sb, char *choice)
 {
 	if (ft_strcmp(choice, "sa") == 0)
 		swap(*sa);
@@ -73,17 +73,17 @@ void	swap_2(t_stack **sa, t_stack **sb, char *choice)
 	ft_putstr("\n");
 }
 
-void	swap_3(t_stack **lst)
+void	small_sort(t_stack **st)
 {
 	int	max_id;
 
-	if (is_sorted(*lst))
+	if (is_sorted(*st))
 		return ;
-	max_id = get_max_index(*lst);
-	if ((*lst)->id == max_id)
-		rotate_3(lst, NULL, "ra");
-	else if ((*lst)->nx->id == max_id)
-		rotate_3(lst, NULL, "rra");
-	if ((*lst)->id > (*lst)->nx->id)
-		swap_2(lst, NULL, "sa");
+	max_id = get_max_index(*st);
+	if ((*st)->main_index == max_id)
+		rotate_move(st, NULL, "ra");
+	else if ((*st)->next->main_index == max_id)
+		rotate_move(st, NULL, "rra");
+	if ((*st)->main_index > (*st)->next->main_index)
+		swap_move(st, NULL, "sa");
 }

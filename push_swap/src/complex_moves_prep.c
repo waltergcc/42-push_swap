@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   complex_moves_utils.c                              :+:      :+:    :+:   */
+/*   complex_moves_prep.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wcorrea- <wcorrea-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 01:08:50 by wcorrea-          #+#    #+#             */
-/*   Updated: 2023/05/07 01:09:51 by wcorrea-         ###   ########.fr       */
+/*   Updated: 2023/05/07 16:53:26 by wcorrea-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	define_need_moves(t_stack **sa, t_stack **sb)
+void	calculate_moves(t_stack **sa, t_stack **sb)
 {
 	t_stack	*a;
 	t_stack	*b;
@@ -25,46 +25,46 @@ void	define_need_moves(t_stack **sa, t_stack **sb)
 	size_b = get_stack_size(b);
 	while (b)
 	{
-		b->mb = b->ps;
-		if (b->ps > size_b / 2)
-			b->mb = (size_b - b->ps) * -1;
-		b->ma = b->tg;
-		if (b->tg > size_a / 2)
-			b->ma = (size_a - b->tg) * -1;
-		b = b->nx;
+		b->mv_b = b->position;
+		if (b->position > size_b / 2)
+			b->mv_b = (size_b - b->position) * -1;
+		b->mv_a = b->where_fit;
+		if (b->where_fit > size_a / 2)
+			b->mv_a = (size_a - b->where_fit) * -1;
+		b = b->next;
 	}
 }
 
-int	define_targets(t_stack **sa, int b_id, int target, int position)
+int	get_a_position(t_stack **sa, int b_index, int max, int a_pos)
 {
 	t_stack	*a;
 
 	a = *sa;
 	while (a)
 	{
-		if (a->id > b_id && a->id < target)
+		if (a->main_index > b_index && a->main_index < max)
 		{
-			target = a->id;
-			position = a->ps;
+			max = a->main_index;
+			a_pos = a->position;
 		}
-		a = a->nx;
+		a = a->next;
 	}
-	if (target != INT_MAX)
-		return (position);
+	if (max != INT_MAX)
+		return (a_pos);
 	a = *sa;
 	while (a)
 	{
-		if (a->id < target)
+		if (a->main_index < max)
 		{
-			target = a->id;
-			position = a->ps;
+			max = a->main_index;
+			a_pos = a->position;
 		}
-		a = a->nx;
+		a = a->next;
 	}
-	return (position);
+	return (a_pos);
 }
 
-void	define_positions(t_stack **st)
+void	get_stack_positions(t_stack **st)
 {
 	t_stack	*s;
 	int		i;
@@ -73,47 +73,25 @@ void	define_positions(t_stack **st)
 	i = 0;
 	while (s)
 	{
-		s->ps = i;
-		s = s->nx;
+		s->position = i;
+		s = s->next;
 		i++;
 	}
 }
 
-void	get_target_position(t_stack **sa, t_stack **sb)
+void	where_fit_in_a(t_stack **sa, t_stack **sb)
 {
 	t_stack	*b;
-	int		target;
+	int		a_pos;
 
 	b = *sb;
-	define_positions(sa);
-	define_positions(sb);
-	target = 0;
+	get_stack_positions(sa);
+	get_stack_positions(sb);
+	a_pos = 0;
 	while (b)
 	{
-		target = define_targets(sa, b->id, INT_MAX, target);
-		b->tg = target;
-		b = b->nx;
+		a_pos = get_a_position(sa, b->main_index, INT_MAX, a_pos);
+		b->where_fit = a_pos;
+		b = b->next;
 	}
-}
-
-int	get_lower_position(t_stack **st)
-{
-	t_stack	*s;
-	int		min_id;
-	int		low;
-
-	s = *st;
-	min_id = INT_MAX;
-	define_positions(st);
-	low = s->ps;
-	while (s)
-	{
-		if (s->id < min_id)
-		{
-			min_id = s->id;
-			low = s->ps;
-		}
-		s = s->nx;
-	}
-	return (low);
 }

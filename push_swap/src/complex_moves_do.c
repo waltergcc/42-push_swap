@@ -1,95 +1,95 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   do_complex_moves.c                                 :+:      :+:    :+:   */
+/*   complex_moves_do.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wcorrea- <wcorrea-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 01:12:37 by wcorrea-          #+#    #+#             */
-/*   Updated: 2023/05/07 01:12:56 by wcorrea-         ###   ########.fr       */
+/*   Updated: 2023/05/07 16:32:05 by wcorrea-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static void	reverse_both(t_stack **sa, t_stack **sb, int *ma, int *mb)
+static void	reverse_both(t_stack **sa, t_stack **sb, int *mv_a, int *mv_b)
 {
-	while (*ma < 0 && *ma < 0)
+	while (*mv_a < 0 && *mv_b < 0)
 	{
-		(*ma)++;
-		(*mb)++;
-		rotate_3(sa, sb, "rrr");
+		(*mv_a)++;
+		(*mv_b)++;
+		rotate_move(sa, sb, "rrr");
 	}
 }
 
-static void	rotate_both(t_stack **sa, t_stack **sb, int *ma, int *mb)
+static void	rotate_both(t_stack **sa, t_stack **sb, int *mv_a, int *mv_b)
 {
-	while (*ma > 0 && *mb > 0)
+	while (*mv_a > 0 && *mv_b > 0)
 	{
-		(*ma)--;
-		(*mb)--;
-		rotate_3(sa, sb, "rr");
+		(*mv_a)--;
+		(*mv_b)--;
+		rotate_move(sa, sb, "rr");
 	}
 }
 
-static void	rotate_a(t_stack **sa, int *ma)
+static void	rotate_a(t_stack **sa, int *mv_a)
 {
-	while (*ma)
+	while (*mv_a)
 	{
-		if (*ma > 0)
+		if (*mv_a > 0)
 		{
-			rotate_3(sa, NULL, "ra");
-			(*ma)--;
+			rotate_move(sa, NULL, "ra");
+			(*mv_a)--;
 		}
-		else if (*ma < 0)
+		else if (*mv_a < 0)
 		{
-			rotate_3(sa, NULL, "rra");
-			(*ma)++;
-		}
-	}
-}
-
-static void	rotate_b(t_stack **sb, int *mb)
-{
-	while (*mb)
-	{
-		if (*mb > 0)
-		{
-			rotate_3(NULL, sb, "rb");
-			(*mb)--;
-		}
-		else if (*mb < 0)
-		{
-			rotate_3(NULL, sb, "rrb");
-			(*mb)++;
+			rotate_move(sa, NULL, "rra");
+			(*mv_a)++;
 		}
 	}
 }
 
-void	sort_with_less_moves(t_stack **sa, t_stack **sb)
+static void	rotate_b(t_stack **sb, int *mv_b)
+{
+	while (*mv_b)
+	{
+		if (*mv_b > 0)
+		{
+			rotate_move(NULL, sb, "rb");
+			(*mv_b)--;
+		}
+		else if (*mv_b < 0)
+		{
+			rotate_move(NULL, sb, "rrb");
+			(*mv_b)++;
+		}
+	}
+}
+
+void	less_moves_sort(t_stack **sa, t_stack **sb)
 {
 	t_stack	*b;
 	int		less_moves;
-	int		ma;
-	int		mb;
+	int		mv_a;
+	int		mv_b;
 
 	b = *sb;
 	less_moves = INT_MAX;
 	while (b)
 	{
-		if (absolute(b->ma) + absolute(b->mb) < absolute(less_moves))
+		if (absolute(b->mv_a) + absolute(b->mv_b) < absolute(less_moves))
 		{
-			less_moves = absolute(b->ma) + absolute(b->mb);
-			ma = b->ma;
-			mb = b->mb;
+			less_moves = absolute(b->mv_a) + absolute(b->mv_b);
+			mv_a = b->mv_a;
+			mv_b = b->mv_b;
 		}
-		b = b->nx;
+		b = b->next;
 	}
-	if (ma < 0 && mb < 0)
-		reverse_both(sa, sb, &ma, &mb);
-	else if (ma > 0 && mb > 0)
-		rotate_both(sa, sb, &ma, &mb);
-	rotate_a(sa, &ma);
-	rotate_b(sb, &mb);
-	swap_2(sa, sb, "pa");
+	if (mv_a < 0 && mv_b < 0)
+		reverse_both(sa, sb, &mv_a, &mv_b);
+	else if (mv_a > 0 && mv_b > 0)
+		rotate_both(sa, sb, &mv_a, &mv_b);
+	rotate_a(sa, &mv_a);
+	rotate_b(sb, &mv_b);
+	swap_move(sa, sb, "pa");
 }

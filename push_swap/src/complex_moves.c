@@ -6,13 +6,54 @@
 /*   By: wcorrea- <wcorrea-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 10:53:55 by wcorrea-          #+#    #+#             */
-/*   Updated: 2023/05/07 01:20:40 by wcorrea-         ###   ########.fr       */
+/*   Updated: 2023/05/07 16:53:26 by wcorrea-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static void	split_stack(t_stack **sa, t_stack **sb)
+int	get_lower_position(t_stack **st)
+{
+	t_stack	*s;
+	int		low_index;
+	int		low_position;
+
+	s = *st;
+	low_index = INT_MAX;
+	get_stack_positions(st);
+	low_position = s->position;
+	while (s)
+	{
+		if (s->main_index < low_index)
+		{
+			low_index = s->main_index;
+			low_position = s->position;
+		}
+		s = s->next;
+	}
+	return (low_position);
+}
+
+static void	last_rotates(t_stack **sa)
+{
+	int	size;
+	int	lower_position;
+
+	size = get_stack_size(*sa);
+	lower_position = get_lower_position(sa);
+	if (lower_position > size / 2)
+	{
+		while (lower_position++ < size)
+			rotate_move(sa, NULL, "rra");
+	}
+	else
+	{
+		while (lower_position--)
+			rotate_move(sa, NULL, "ra");
+	}
+}
+
+static void	push_b_save_3(t_stack **sa, t_stack **sb)
 {
 	int		size;
 	int		pushed;
@@ -23,51 +64,32 @@ static void	split_stack(t_stack **sa, t_stack **sb)
 	i = 0;
 	while (size > 6 && i < size && pushed < size / 2)
 	{
-		if ((*sa)->id <= size / 2)
+		if ((*sa)->main_index <= size / 2)
 		{
-			swap_2(sa, sb, "pb");
+			swap_move(sa, sb, "pb");
 			pushed++;
 		}
 		else
-			rotate_3(sa, NULL, "ra");
+			rotate_move(sa, NULL, "ra");
 		i++;
 	}
 	while (size - pushed > 3)
 	{
-		swap_2(sa, sb, "pb");
+		swap_move(sa, sb, "pb");
 		pushed++;
 	}
-	swap_3(sa);
+	small_sort(sa);
 }
 
-static void	shift_stack(t_stack **sa)
+void	big_sort(t_stack **sa, t_stack **sb)
 {
-	int	size;
-	int	low;
-
-	size = get_stack_size(*sa);
-	low = get_lower_position(sa);
-	if (low > size / 2)
-	{
-		while (low++ < size)
-			rotate_3(sa, NULL, "rra");
-	}
-	else
-	{
-		while (low--)
-			rotate_3(sa, NULL, "ra");
-	}
-}
-
-void	above_3(t_stack **sa, t_stack **sb)
-{
-	split_stack(sa, sb);
+	push_b_save_3(sa, sb);
 	while (*sb)
 	{
-		get_target_position(sa, sb);
-		define_need_moves(sa, sb);
-		sort_with_less_moves(sa, sb);
+		where_fit_in_a(sa, sb);
+		calculate_moves(sa, sb);
+		less_moves_sort(sa, sb);
 	}
 	if (!is_sorted(*sa))
-		shift_stack(sa);
+		last_rotates(sa);
 }

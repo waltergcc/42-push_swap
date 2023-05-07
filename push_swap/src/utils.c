@@ -6,7 +6,7 @@
 /*   By: wcorrea- <wcorrea-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 22:45:57 by wcorrea-          #+#    #+#             */
-/*   Updated: 2023/05/06 22:58:08 by wcorrea-         ###   ########.fr       */
+/*   Updated: 2023/05/07 12:53:33 by wcorrea-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	free_stack(t_stack **lst)
 		return ;
 	while (*lst)
 	{
-		c = (*lst)->nx;
+		c = (*lst)->next;
 		free(*lst);
 		*lst = c;
 	}

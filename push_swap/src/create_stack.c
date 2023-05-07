@@ -6,38 +6,38 @@
 /*   By: wcorrea- <wcorrea-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 23:37:57 by wcorrea-          #+#    #+#             */
-/*   Updated: 2023/05/07 00:09:20 by wcorrea-         ###   ########.fr       */
+/*   Updated: 2023/05/07 17:28:15 by wcorrea-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	define_index(t_stack *sa, int size)
+void	get_main_index(t_stack *sa, int size)
 {
 	t_stack	*a;
-	t_stack	*max_ad;
-	int		max_nb;
+	t_stack	*max_address;
+	int		max_n;
 
 	while (size--)
 	{
 		a = sa;
-		max_nb = INT_MIN;
-		max_ad = NULL;
+		max_n = INT_MIN;
+		max_address = NULL;
 		while (a)
 		{
-			if (a->nb == INT_MIN && a->id == 0)
-				a->id = 1;
-			else if (a->nb > max_nb && a->id == 0)
+			if (a->n == INT_MIN && a->main_index == 0)
+				a->main_index = 1;
+			else if (a->n > max_n && a->main_index == 0)
 			{
-				max_nb = a->nb;
-				max_ad = a;
+				max_n = a->n;
+				max_address = a;
 				a = sa;
 			}
 			else
-				a = a->nx;
+				a = a->next;
 		}
-		if (max_ad)
-			max_ad->id = size + 1;
+		if (max_address)
+			max_address->main_index = size + 1;
 	}
 }
 
@@ -51,7 +51,7 @@ int	get_stack_size(t_stack *st)
 	while (s)
 	{
 		size++;
-		s = s->nx;
+		s = s->next;
 	}
 	return (size);
 }
@@ -63,13 +63,13 @@ static t_stack	*new_node(int n)
 	s = (t_stack *)malloc(sizeof(t_stack));
 	if (!s)
 		return (NULL);
-	s->nb = n;
-	s->id = 0;
-	s->ps = -1;
-	s->tg = -1;
-	s->ma = -1;
-	s->mb = -1;
-	s->nx = NULL;
+	s->n = n;
+	s->main_index = 0;
+	s->position = -1;
+	s->where_fit = -1;
+	s->mv_a = -1;
+	s->mv_b = -1;
+	s->next = NULL;
 	return (s);
 }
 
@@ -84,9 +84,9 @@ static void	add_at_end(t_stack **st, t_stack *new)
 	else
 	{
 		s = *st;
-		while (s->nx)
-			s = s->nx;
-		s->nx = new;
+		while (s->next)
+			s = s->next;
+		s->next = new;
 	}
 }
 

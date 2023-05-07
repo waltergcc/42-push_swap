@@ -1,0 +1,15 @@
+{
+    "tasks": [
+		{
+            "label": "build",
+            "type": "shell",
+            "command": "make -C push_swap/",
+            "group": {
+                "kind": "build",
+                "isDefault": true,
+				"problemMatcher": "$gcc"
+            }
+        }
+	],
+    "version": "2.0.0"
+}

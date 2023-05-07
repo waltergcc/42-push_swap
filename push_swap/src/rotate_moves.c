@@ -6,7 +6,7 @@
 /*   By: wcorrea- <wcorrea-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 22:54:56 by wcorrea-          #+#    #+#             */
-/*   Updated: 2023/05/06 23:34:09 by wcorrea-         ###   ########.fr       */
+/*   Updated: 2023/05/07 12:59:15 by wcorrea-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ static void	reverse(t_stack **st)
 	last = *st;
 	before = *st;
 	s = *st;
-	while (last->nx)
-		last = last->nx;
-	while (before->nx->nx)
-		before = before->nx;
+	while (last->next)
+		last = last->next;
+	while (before->next->next)
+		before = before->next;
 	*st = last;
-	(*st)->nx = s;
-	before->nx = NULL;
+	(*st)->next = s;
+	before->next = NULL;
 }
 
 static void	rotate(t_stack **st)
@@ -36,15 +36,15 @@ static void	rotate(t_stack **st)
 	t_stack	*last;
 
 	s = *st;
-	*st = (*st)->nx;
+	*st = (*st)->next;
 	last = *st;
-	while (last->nx)
-		last = last->nx;
-	s->nx = NULL;
-	last->nx = s;
+	while (last->next)
+		last = last->next;
+	s->next = NULL;
+	last->next = s;
 }
 
-void	rotate_3(t_stack **sa, t_stack **sb, char *choice)
+void	rotate_move(t_stack **sa, t_stack **sb, char *choice)
 {
 	if (ft_strcmp(choice, "ra") == 0)
 		rotate(sa);
