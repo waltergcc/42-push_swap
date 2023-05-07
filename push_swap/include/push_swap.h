@@ -6,7 +6,7 @@
 /*   By: wcorrea- <wcorrea-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 22:11:02 by wcorrea-          #+#    #+#             */
-/*   Updated: 2023/05/06 09:38:58 by wcorrea-         ###   ########.fr       */
+/*   Updated: 2023/05/07 01:17:06 by wcorrea-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,27 +20,36 @@
 
 typedef struct s_stack
 {
-	int				content;
-	int				index;
-	struct s_stack	*next;
+	int				nb;
+	int				id;
+	int				ps;
+	int				tg;
+	int				mb;
+	int				ma;
+	struct s_stack	*nx;
 }					t_stack;
 
-int		check_input(char **arg);
-t_stack	*create_stack(int ac, char **av);
-int		get_size(t_stack *stack);
-void	define_index(t_stack *a, int size);
-int		check_sort(t_stack *stack);
+int			is_correct_input(char **arg);
+int			get_stack_size(t_stack *st);
+t_stack		*create_stack(int ac, char **av);
+void		define_index(t_stack *sa, int size);
+int			is_sorted(t_stack *st);
 
-int		ft_strcmp(char *s1, char *s2);
+void		swap_2(t_stack **sa, t_stack **sb, char *choice);
+void		swap_3(t_stack **st);
+void		rotate_3(t_stack **sa, t_stack **sb, char *choice);
+void		above_3(t_stack **sa, t_stack **sb);
 
-void	swap_2(t_stack **a, t_stack **b, char *choice);
-void	rotate_3(t_stack **a, t_stack **b, char *choice);
-void	swap_3(t_stack **stack);
+void		sort_with_less_moves(t_stack **sa, t_stack **sb);
+int			get_lower_position(t_stack **st);
+void		get_target_position(t_stack **sa, t_stack **sb);
+void		define_need_moves(t_stack **sa, t_stack **sb);
 
-int		absolute_nbr(int n);
-int		ft_atoi(const char *s);
-void	ft_putstr(char *s);
-void	free_stack(t_stack **stack);
-void	program_exit(t_stack **a, t_stack **b);
+int			ft_strcmp(char *s1, char *s2);
+int			absolute(int n);
+long int	ft_atoi(const char *s);
+void		ft_putstr(char *s);
+void		free_stack(t_stack **st);
+void		print_error_and_exit(t_stack **sa, t_stack **sb);
 
 #endif

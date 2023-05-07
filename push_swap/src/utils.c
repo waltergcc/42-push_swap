@@ -6,7 +6,7 @@
 /*   By: wcorrea- <wcorrea-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 22:45:57 by wcorrea-          #+#    #+#             */
-/*   Updated: 2023/05/06 00:34:08 by wcorrea-         ###   ########.fr       */
+/*   Updated: 2023/05/06 22:58:08 by wcorrea-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,20 @@ void	ft_putstr(char *s)
 
 void	free_stack(t_stack **lst)
 {
-	t_stack	*curr;
+	t_stack	*c;
 
 	if (!lst || !*lst)
 		return ;
 	while (*lst)
 	{
-		curr = (*lst)->next;
+		c = (*lst)->nx;
 		free(*lst);
-		*lst = curr;
+		*lst = c;
 	}
 	*lst = NULL;
 }
 
-void	program_exit(t_stack **a, t_stack **b)
+void	print_error_and_exit(t_stack **a, t_stack **b)
 {
 	if (!a || *a)
 		free_stack(a);
@@ -46,17 +46,17 @@ void	program_exit(t_stack **a, t_stack **b)
 	exit(1);
 }
 
-int	absolute_nbr(int n)
+int	absolute(int n)
 {
 	if (n < 0)
 		return (-n);
 	return (n);
 }
 
-int	ft_atoi(const char *s)
+long int	ft_atoi(const char *s)
 {
-	int	r;
-	int	sg;
+	long int	r;
+	int			sg;
 
 	r = 0;
 	sg = 1;

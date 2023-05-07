@@ -6,84 +6,84 @@
 /*   By: wcorrea- <wcorrea-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 21:36:29 by wcorrea-          #+#    #+#             */
-/*   Updated: 2023/05/06 09:38:58 by wcorrea-         ###   ########.fr       */
+/*   Updated: 2023/05/06 23:32:17 by wcorrea-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static int	get_max_index(t_stack *lst)
+static int	get_max_index(t_stack *st)
 {
-	int		index;
-	t_stack	*curr;
+	int		max_id;
+	t_stack	*s;
 
-	index = lst->index;
-	curr = lst;
-	while (curr)
+	max_id = st->id;
+	s = st;
+	while (s)
 	{
-		if (curr->index > index)
-			index = curr->index;
-		curr = curr->next;
+		if (s->id > max_id)
+			max_id = s->id;
+		s = s->nx;
 	}
-	return (index);
+	return (max_id);
 }
 
-static void	swap(t_stack *lst)
+static void	swap(t_stack *st)
 {
-	int	temp;
+	int	t;
 
-	if (!lst || !lst->next)
+	if (!st || !st->nx)
 		return ;
-	temp = lst->content;
-	lst->content = lst->next->content;
-	lst->next->content = temp;
-	temp = lst->index;
-	lst->index = lst->next->index;
-	lst->next->index = temp;
+	t = st->nb;
+	st->nb = st->nx->nb;
+	st->nx->nb = t;
+	t = st->id;
+	st->id = st->nx->id;
+	st->nx->id = t;
 }
 
-static void	push(t_stack **from, t_stack **to)
+static void	push(t_stack **src, t_stack **dst)
 {
-	t_stack	*curr;
+	t_stack	*t;
 
-	if (!from)
+	if (!src)
 		return ;
-	curr = (*from)->next;
-	(*from)->next = *to;
-	*to = *from;
-	*from = curr;
+	t = (*src)->nx;
+	(*src)->nx = *dst;
+	*dst = *src;
+	*src = t;
 }
 
-void	swap_2(t_stack **a, t_stack **b, char *choice)
+void	swap_2(t_stack **sa, t_stack **sb, char *choice)
 {
 	if (ft_strcmp(choice, "sa") == 0)
-		swap(*a);
+		swap(*sa);
 	else if (ft_strcmp(choice, "sb") == 0)
-		swap(*b);
+		swap(*sb);
 	else if (ft_strcmp(choice, "ss") == 0)
 	{
-		swap(*a);
-		swap(*b);
+		swap(*sa);
+		swap(*sb);
 	}
 	if (ft_strcmp(choice, "pa") == 0)
-		push(b, a);
+		push(sb, sa);
 	else if (ft_strcmp(choice, "pb") == 0)
-		push(a, b);
+		push(sa, sb);
 	ft_putstr(choice);
 	ft_putstr("\n");
 }
 
 void	swap_3(t_stack **lst)
 {
-	int	max;
+	int	max_id;
 
-	if (check_sort(*lst))
+	if (is_sorted(*lst))
 		return ;
-	max = get_max_index(*lst);
-	if ((*lst)->index == max)
+	max_id = get_max_index(*lst);
+	if ((*lst)->id == max_id)
 		rotate_3(lst, NULL, "ra");
-	else if ((*lst)->next->index == max)
+	else if ((*lst)->nx->id == max_id)
 		rotate_3(lst, NULL, "rra");
-	if ((*lst)->index > (*lst)->next->index)
+	if ((*lst)->id > (*lst)->nx->id)
 		swap_2(lst, NULL, "sa");
 }

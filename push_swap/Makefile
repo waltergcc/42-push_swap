@@ -6,20 +6,21 @@
 #    By: wcorrea- <wcorrea-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 22:41:28 by wcorrea-          #+#    #+#              #
-#    Updated: 2023/05/06 09:37:21 by wcorrea-         ###   ########.fr        #
+#    Updated: 2023/05/07 01:24:03 by wcorrea-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = push_swap
 
-SRC = push_swap.c check_input.c utils.c create_stack.c \
-		basic_moves.c rotate_moves.c
+SRC = src/push_swap.c src/check_input.c src/utils.c src/create_stack.c \
+		src/basic_moves.c src/rotate_moves.c src/complex_moves.c \
+		src/complex_moves_prep.c src/complex_moves_do.c
 OBJS = ${SRC:.c=.o}
 
 CC = cc
 RM = rm -f
 CFLAGS = -Wall -Wextra -Werror
-INCLUDE = -I .
+INCLUDE = -I include
 
 .c.o:
 		${CC} ${CFLAGS} ${INCLUDE} -c $< -o ${<:.c=.o}

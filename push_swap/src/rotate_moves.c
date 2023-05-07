@@ -6,63 +6,63 @@
 /*   By: wcorrea- <wcorrea-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 22:54:56 by wcorrea-          #+#    #+#             */
-/*   Updated: 2023/05/06 09:41:19 by wcorrea-         ###   ########.fr       */
+/*   Updated: 2023/05/06 23:34:09 by wcorrea-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static void	reverse(t_stack **lst)
+static void	reverse(t_stack **st)
 {
-	t_stack	*curr;
-	t_stack	*before_last;
+	t_stack	*s;
+	t_stack	*before;
 	t_stack	*last;
 
-	last = *lst;
-	before_last = *lst;
-	curr = *lst;
-	while (last->next)
-		last = last->next;
-	while (before_last->next->next)
-		before_last = before_last->next;
-	*lst = last;
-	(*lst)->next = curr;
-	before_last->next = NULL;
+	last = *st;
+	before = *st;
+	s = *st;
+	while (last->nx)
+		last = last->nx;
+	while (before->nx->nx)
+		before = before->nx;
+	*st = last;
+	(*st)->nx = s;
+	before->nx = NULL;
 }
 
-static void	rotate(t_stack **lst)
+static void	rotate(t_stack **st)
 {
-	t_stack	*curr;
+	t_stack	*s;
 	t_stack	*last;
 
-	curr = *lst;
-	*lst = (*lst)->next;
-	last = *lst;
-	while (last->next)
-		last = last->next;
-	curr->next = NULL;
-	last->next = curr;
+	s = *st;
+	*st = (*st)->nx;
+	last = *st;
+	while (last->nx)
+		last = last->nx;
+	s->nx = NULL;
+	last->nx = s;
 }
 
-void	rotate_3(t_stack **a, t_stack **b, char *choice)
+void	rotate_3(t_stack **sa, t_stack **sb, char *choice)
 {
 	if (ft_strcmp(choice, "ra") == 0)
-		rotate(a);
+		rotate(sa);
 	else if (ft_strcmp(choice, "rb") == 0)
-		rotate(b);
+		rotate(sb);
 	else if (ft_strcmp(choice, "rr") == 0)
 	{
-		rotate(a);
-		rotate(b);
+		rotate(sa);
+		rotate(sb);
 	}
 	else if (ft_strcmp(choice, "rra") == 0)
-		reverse(a);
+		reverse(sa);
 	else if (ft_strcmp(choice, "rrb") == 0)
-		reverse(b);
+		reverse(sb);
 	else if (ft_strcmp(choice, "rrr") == 0)
 	{
-		reverse(a);
-		reverse(b);
+		reverse(sa);
+		reverse(sb);
 	}
 	ft_putstr(choice);
 	ft_putstr("\n");
