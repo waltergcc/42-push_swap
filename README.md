@@ -93,3 +93,7 @@ Before starting the sorting algorithm, the function `where_fit_in_a` is called t
 After sorting each element in stack B, there may be elements that are not in their correct positions in stack A, because they were already sorted when they were inserted in stack B. Therefore, a function `last_rotates` is called to rotate stack A to put these elements in their correct positions.
 
 This algorithm is an improvement over the basic sorting algorithm for size 3 or more, because it considers the positions of the elements in stack A to move the elements from stack B to stack A in the most efficient way.
+
+## Used Tests
+- Push-Swap-Tester: https://github.com/gemartin99/Push-Swap-Tester
+-  push_swap_visualizer: https://github.com/o-reo/push_swap_visualizer
