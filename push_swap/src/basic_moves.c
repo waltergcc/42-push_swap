@@ -6,7 +6,7 @@
 /*   By: wcorrea- <wcorrea-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 21:36:29 by wcorrea-          #+#    #+#             */
-/*   Updated: 2023/05/07 16:14:35 by wcorrea-         ###   ########.fr       */
+/*   Updated: 2023/05/08 10:46:10 by wcorrea-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,30 +28,30 @@ static int	get_max_index(t_stack *st)
 	return (max_id);
 }
 
-static void	swap(t_stack *st)
+static void	swap(t_stack *top)
 {
-	int	t;
+	int	tmp;
 
-	if (!st || !st->next)
+	if (!top || !top->next)
 		return ;
-	t = st->n;
-	st->n = st->next->n;
-	st->next->n = t;
-	t = st->main_index;
-	st->main_index = st->next->main_index;
-	st->next->main_index = t;
+	tmp = top->n;
+	top->n = top->next->n;
+	top->next->n = tmp;
+	tmp = top->main_index;
+	top->main_index = top->next->main_index;	
+	top->next->main_index = tmp;
 }
 
-static void	push(t_stack **src, t_stack **dst)
+static void	push(t_stack **top1, t_stack **top2)
 {
-	t_stack	*t;
+	t_stack	*tmp;
 
-	if (!src)
+	if (!top1)
 		return ;
-	t = (*src)->next;
-	(*src)->next = *dst;
-	*dst = *src;
-	*src = t;
+	tmp = (*top1)->next;
+	(*top1)->next = *top2;
+	*top2 = *top1;
+	*top1 = tmp;
 }
 
 void	swap_move(t_stack **sa, t_stack **sb, char *choice)
