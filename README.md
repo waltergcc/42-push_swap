@@ -94,6 +94,8 @@ After sorting each element in stack B, there may be elements that are not in the
 
 This algorithm is an improvement over the basic sorting algorithm for size 3 or more, because it considers the positions of the elements in stack A to move the elements from stack B to stack A in the most efficient way.
 
+## Grade: 100 / 100
+
 ## Used Tests
 - Push-Swap-Tester: https://github.com/gemartin99/Push-Swap-Tester
 -  push_swap_visualizer: https://github.com/o-reo/push_swap_visualizer
